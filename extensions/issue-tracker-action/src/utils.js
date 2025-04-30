@@ -56,7 +56,7 @@ export async function getIssues(productId) {
 }
 
 async function makeGraphQLQuery(query, variables) {
-  const graqhQLQuery = {
+  const graphQLQuery = {
     query,
     variables,
   }

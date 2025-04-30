@@ -8,7 +8,7 @@ import {
   Box,
   reactExtension,
 } from '@shopify/ui-extensions-react/admin';
-import { getIssues, updateIssues } from './utiles';
+import { getIssues, updateIssues } from './utils';
 
 function generatedId (allIssues) {
   return !allIssues?.length ? 0 : allIssues[allIssues.length - 1].id + 1;
