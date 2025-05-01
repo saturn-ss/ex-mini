@@ -39,7 +39,7 @@ function App() {
   const [issue, setIssue] = useState({title: "", description: ""});
   const [allIssues, setAllIssues] = useState([]);
   const [formErrors, setFormErrors] = useState(null);
-  const { title, description } = issue;
+  const { title, description, id } = issue;
   const isEditing = id !== undefined;
 
   useEffect(() => {
