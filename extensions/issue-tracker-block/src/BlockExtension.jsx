@@ -185,7 +185,7 @@ function App() {
               </InlineStack>
               <Button
                 onPress={() => setCurrentPage((prev) => prev + 1)}
-                disabled={currentPage => totalPages }
+                disabled={currentPage >= totalPages }
               >
                 <Icon name="ChevronRightMinor" />
               </Button>
