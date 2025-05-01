@@ -3,7 +3,7 @@
 client_id = "2e0c26964798f9a2d0c8eb025cea5432"
 name = "ex-mini"
 handle = "ex-mini"
-application_url = "https://controllers-operators-presently-counter.trycloudflare.com"
+application_url = "https://cardiac-x-supplied-totals.trycloudflare.com"
 embedded = true
 
 [build]
@@ -27,9 +27,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://controllers-operators-presently-counter.trycloudflare.com/auth/callback",
-  "https://controllers-operators-presently-counter.trycloudflare.com/auth/shopify/callback",
-  "https://controllers-operators-presently-counter.trycloudflare.com/api/auth/callback"
+  "https://cardiac-x-supplied-totals.trycloudflare.com/auth/callback",
+  "https://cardiac-x-supplied-totals.trycloudflare.com/auth/shopify/callback",
+  "https://cardiac-x-supplied-totals.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
