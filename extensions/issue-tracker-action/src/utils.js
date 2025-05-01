@@ -1,32 +1,24 @@
 export async function updateIssues(id, newIssues) {
-  // This example uses metafileds to store the data. For more information on metafields, see https://shopify.dev/api/admin-graphql/2023-10/mutations/metafieldsSet
+  // This example uses metafields to store the data. For more information, refer to https://shopify.dev/docs/apps/custom-data/metafields.
   return await makeGraphQLQuery(
     `mutation SetMetafield($namespace: String!, $ownerId: ID!, $key: String!, $type: String!, $value: String!) {
-      metafieldDefinitionCreate(
-        definition: {
-          namespace: $namespace,
-          key: $key,
-          name: "Tracked Issues",
-          ownerType: PRODUCT,
-          type: $type,
-          access: {
-            admin: MERCHANT_READ_WRITE
-          }
-        }
-      ) {
-        createdDefinition {
-          id
-        }  
+    metafieldDefinitionCreate(
+      definition: {namespace: $namespace, key: $key, name: "Tracked Issues", ownerType: PRODUCT, type: $type, access: {admin: MERCHANT_READ_WRITE}}
+    ) {
+      createdDefinition {
+        id
       }
-      metafieldsSet(metafields: [{ownerId: $ownerId, namespace: $namespace, key: $key, type: $type, value: $value }]) {
-        userErrors {
-          field
-          message
-          code
-        }
+    }
+    metafieldsSet(metafields: [{ownerId:$ownerId, namespace:$namespace, key:$key, type:$type, value:$value}]) {
+      userErrors {
+        field
+        message
+        code
       }
-    }`
-    , {
+    }
+  }
+  `,
+    {
       ownerId: id,
       namespace: "$app:issues",
       key: "issues",
@@ -46,7 +38,7 @@ export async function getIssues(productId) {
         }
       }
     }
-    `,
+  `,
     { id: productId }
   );
 
@@ -59,7 +51,7 @@ async function makeGraphQLQuery(query, variables) {
   const graphQLQuery = {
     query,
     variables,
-  }
+  };
 
   const res = await fetch("shopify:admin/api/graphql.json", {
     method: "POST",
@@ -72,3 +64,33 @@ async function makeGraphQLQuery(query, variables) {
 
   return await res.json();
 }
+
+export async function getProductVariants(data) {
+  const getProductQuery = {
+    query: `query Product($id: ID!) {
+      product(id: $id) {
+        title
+        variants(first: 2) {
+          edges {
+            node {
+              id
+            }
+          }
+        }
+      }
+    }`,
+    variables: {id: data.selected[0].id},
+  };
+
+  const res = await fetch("shopify:admin/api/graphql.json", {
+    method: "POST",
+    body: JSON.stringify(getProductQuery),
+  });
+
+  if (!res.ok) {
+    console.error('Network error');
+  }
+
+  const productData = await res.json();
+  return productData.data.product.variants.edges;
+};
