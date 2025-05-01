@@ -18,13 +18,12 @@ import { getIssues, updateIssues } from "./utils";
 
 // The target used here must match the target used in the extension's .toml file at ./shopify.extension.toml
 const TARGET = "admin.product-details.block.render";
-
 export default reactExtension(TARGET, () => <App />);
 
 const PAGE_SIZE = 3;
 
 function App() {
-  const { data, il8n } = useApi(TARGET);
+  const { data, i18n } = useApi(TARGET);
   const [loading, setLoading] = useState(true);
   const [initialValues, setInitialValues] = useState([]);
   const [issues, setIssues] = useState([]);
@@ -107,7 +106,7 @@ function App() {
     </InlineStack>
   ) : (
     <AdminBlock
-      title={il8n.translate("name")}
+      title={i18n.translate("name")}
     >
       <Text>Issues</Text>
       <Form id={`issues-form`} onSubmit={onSubmit} onReset={onReset}>
@@ -177,19 +176,20 @@ function App() {
               >
                 <Icon name="ChevronLeftMinor" />
               </Button>
+              <InlineStack
+                inlineSize={25}
+                blockAlignment="center"
+                inlineAlignment="center"
+              >
+                <Text>{currentPage}</Text>
+              </InlineStack>
+              <Button
+                onPress={() => setCurrentPage((prev) => prev + 1)}
+                disabled={currentPage => totalPages }
+              >
+                <Icon name="ChevronRightMinor" />
+              </Button>
             </InlineStack>
-            <InlineStack
-              inlineSize={25}
-              blockAlignment="center"
-              inlineAlignment="center"
-            >
-              <Text>{currentPage}</Text>
-            </InlineStack>
-            <Button
-              onPress={() => setCurrentPage((prev) => prev + 1)}
-            >
-              <Icon name="ChevronRightMinor" />
-            </Button>
           </>
         ) : (
           <>
